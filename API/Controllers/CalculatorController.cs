@@ -15,19 +15,19 @@ namespace API.Controllers
             _calculator = calculator;
         }
 
-        [HttpGet]
+        [HttpGet("operations")]
         public string[] ListAvailableOperations()
         {
             return _calculator.GetAvailableOperations();
         }
 
-        [HttpGet("{operand}/{firstNumber:int}/{secondNumber:int}")]
-        public decimal PerformOperation(string operand, int? firstNumber, int? secondNumber)
+        [HttpGet("{operand}/{firstNumber:decimal}/{secondNumber:decimal}")]
+        public decimal PerformOperation(string operand, decimal? firstNumber, decimal? secondNumber)
         {
             if (operand == null || firstNumber == null || secondNumber == null)
                 throw new InvalidOperationException("invalid input for operation");
 
-            return _calculator.PerformOperation(operand, (int) firstNumber, (int) secondNumber);
+            return _calculator.PerformOperation(operand, (decimal) firstNumber, (decimal) secondNumber);
         }
     }
 }

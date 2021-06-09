@@ -5,7 +5,7 @@ namespace Core.Assets
     public interface ICalculator
     {
         string[] GetAvailableOperations();
-        decimal PerformOperation(string operand, int firstNumber, int secondNumber);
+        decimal PerformOperation(string operand, decimal firstNumber, decimal secondNumber);
     }
 
     public class Calculator : ICalculator
@@ -17,14 +17,14 @@ namespace Core.Assets
             return _availableOperations;
         }
 
-        public decimal PerformOperation(string operand, int firstNumber, int secondNumber)
+        public decimal PerformOperation(string operand, decimal firstNumber, decimal secondNumber)
         {
             return operand switch
             {
-                "add" => (decimal) firstNumber + secondNumber,
-                "subtract" => (decimal) firstNumber - secondNumber,
-                "multiply" => (decimal) firstNumber * secondNumber,
-                "divide" => (decimal) firstNumber / secondNumber,
+                "add" =>  firstNumber + secondNumber,
+                "subtract" =>  firstNumber - secondNumber,
+                "multiply" =>  firstNumber * secondNumber,
+                "divide" =>  firstNumber / secondNumber,
                 _ => throw new Exception("operand not valid")
             };
         }

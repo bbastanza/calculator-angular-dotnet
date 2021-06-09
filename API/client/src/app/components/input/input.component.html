@@ -1,6 +1,44 @@
-<div class="form-outline">
-    <label class="form-label" for="first">First Number</label>
-    <input type="number" id="first" class="form-control" />
-    <label class="form-label" for="second">Second Number</label>
-    <input type="number" id="second" class="form-control" />
-</div>
+<form
+  class="form-outline form"
+  (ngSubmit)="handleSubmit()">
+  <div class="label mt-3">
+    <label
+      class="form-label label"
+      for="firstNumber">First Number</label>
+    <input
+      type="number"
+      [(ngModel)]="firstNumber"
+      name="firstNumber"
+      id="firstNumber"
+      class="form-control" />
+  </div>
+  <div class="label mt-3">
+    <label
+      class="form-label"
+      for="secondNumber">Second Number</label>
+    <input
+      type="number"
+      [(ngModel)]="secondNumber"
+      name="secondNumber"
+      id="secondNumber"
+      class="form-control" />
+  </div>
+  <button
+    type="button"
+    class="btn btn-success col-12 button mt-3"
+    *ngIf="canGetOperations"
+    (click)="getOperations()">Get
+    Operations</button>
+
+  <app-button
+    [name]="operand"
+    [selected]="currentOperand === operand"
+    *ngFor="let operand of operands"
+    (onSelected)="selectOperation(operand)">hi
+  </app-button>
+
+  <input
+    class="btn btn-success col-12 button mt-3 {{canSubmit ? '' : 'disabled'}}"
+    type="submit"
+    value="Submit">
+</form>
