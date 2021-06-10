@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { Expression } from '../../interfaces/Expression';
+import { Expression } from '../../interfaces/expression';
 
 @Component({
   selector: 'app-input',
@@ -14,12 +14,24 @@ export class InputComponent implements OnInit {
   operands: string[] = [];
   canSubmit: boolean = false;
   canGetOperations: boolean = true;
+  result: number = null;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {}
 
-  handleSubmit() {
+  validateInput(): boolean {
+    const firstNumberString = this.firstNumber?.toString();
+    const secondNumberString = this.secondNumber?.toString();
+    return (
+      firstNumberString?.lastIndexOf('-') <= 0 &&
+      secondNumberString?.lastIndexOf('-') <= 0
+    );
+  }
+
+  handleSubmit(): void {
+    const valid = this.validateInput();
+    if (!valid) return alert('These are not the inputs you are looking for!');
     if (this.currentOperand === 'divide' && this.secondNumber === 0)
       return alert('Cannot divide by 0!');
 
@@ -30,18 +42,14 @@ export class InputComponent implements OnInit {
     };
 
     this.apiService.performOperation(expression).subscribe((result) => {
-      this.firstNumber = parseFloat(
-        result.toLocaleString('en-US', {
-          maximumFractionDigits: 5,
-        })
-      );
+      this.firstNumber = this.result = Math.round(result * 1000000) / 1000000;
       this.secondNumber = 0;
       this.canSubmit = false;
       this.currentOperand = '';
     });
   }
 
-  getOperations() {
+  getOperations(): void {
     this.apiService
       .getOperations()
       .subscribe((list) =>
@@ -50,7 +58,7 @@ export class InputComponent implements OnInit {
     this.canGetOperations = false;
   }
 
-  selectOperation(operand: string) {
+  selectOperation(operand: string): void {
     this.currentOperand = operand;
     this.canSubmit = true;
   }

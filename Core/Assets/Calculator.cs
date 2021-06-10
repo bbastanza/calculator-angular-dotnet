@@ -25,7 +25,7 @@ namespace Core.Assets
                 "subtract" =>  firstNumber - secondNumber,
                 "multiply" =>  firstNumber * secondNumber,
                 "divide" =>  firstNumber / secondNumber,
-                _ => throw new Exception("operand not valid")
+                _ => throw new ApplicationException("operand not valid")
             };
         }
     }

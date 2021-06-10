@@ -1,7 +1,11 @@
-.form {
+.label {
+  text-align: left;
+}
+
+.input {
   text-align: center;
 }
 
-.label {
-  text-align: left;
+.result {
+  animation: pulse 8s infinite;
 }

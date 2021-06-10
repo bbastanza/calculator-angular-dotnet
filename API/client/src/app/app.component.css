@@ -3,7 +3,9 @@
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid #313131;
+  box-shadow: 2px 2px 5px #313131;
   padding: 30px;
   border-radius: 5px;
+  text-align: center;
+  background-color: #fbfbfb;
 }

@@ -7,9 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, ButtonComponent, InputComponent],
+  declarations: [AppComponent, ButtonComponent, InputComponent, FooterComponent],
   imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule],
   providers: [],
   bootstrap: [AppComponent],

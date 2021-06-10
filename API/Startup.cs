@@ -21,8 +21,10 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
             services.AddSpaStaticFiles(config =>
                 config.RootPath = "client/build");
+                
             services.AddScoped<ICalculator, Calculator>();
         }
 
