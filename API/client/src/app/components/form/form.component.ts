@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Expression } from '../../interfaces/expression';
+import { SubscriptionContainer } from '../../helpers/subscriptionContainer';
 
 @Component({
   selector: 'app-input',
@@ -8,6 +9,8 @@ import { Expression } from '../../interfaces/expression';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
+  subscriptions = new SubscriptionContainer();
+
   firstNumber: number = 0;
   secondNumber: number = 0;
   result: number = null;
@@ -23,8 +26,12 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubsribe();
+  }
+
   getOperations(): void {
-    this.apiService.getOperations().subscribe(
+    this.subscriptions.add = this.apiService.getOperations().subscribe(
       (operations: string[]) => {
         operations.forEach((operand) => this.operands.push(operand));
         this.hasRecievedOperations = true;
@@ -40,16 +47,18 @@ export class FormComponent implements OnInit {
       operand: this.currentOperand,
     };
 
-    this.apiService.performOperation(expression).subscribe(
-      (result: number) => {
-        this.result = Math.round(result * 1000000) / 1000000; // to keep decimals in check :)
-        this.firstNumber = 0;
-        this.secondNumber = 0;
-        this.canSubmit = false;
-        this.currentOperand = '';
-      },
-      (err: Error) => this.handleApiError(err)
-    );
+    this.subscriptions.add = this.apiService
+      .performOperation(expression)
+      .subscribe(
+        (result: number) => {
+          this.result = Math.round(result * 1000000) / 1000000; // to keep decimals in check :)
+          this.firstNumber = 0;
+          this.secondNumber = 0;
+          this.canSubmit = false;
+          this.currentOperand = '';
+        },
+        (err: Error) => this.handleApiError(err)
+      );
   }
 
   selectOperation(operand: string): void {
