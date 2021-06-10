@@ -24,18 +24,8 @@ namespace API.Middleware
                 Console.WriteLine($"{ex.GetType()}\n{ex.Message}\n{ex.StackTrace}");
                 context.Response.StatusCode = 418;
                 context.Response.Headers.Add("content-type", "application/json");
-                await context.Response.WriteAsync(new ExceptionModel(ex.Message).ToString() ?? string.Empty);
+                await context.Response.WriteAsync(ex.Message);
             }
-        }
-    }
-
-    public class ExceptionModel
-    {
-        public string Message { get; }
-        
-        public ExceptionModel(string message)
-        {
-            Message = message;
         }
     }
 }

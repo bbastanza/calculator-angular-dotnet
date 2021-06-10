@@ -9,7 +9,6 @@ export class ButtonComponent implements OnInit {
   @Input() name: string;
   @Input() selected: boolean = false;
   @Output() onSelected: EventEmitter<void> = new EventEmitter();
-  constructor() {}
 
   ngOnInit(): void {}
 

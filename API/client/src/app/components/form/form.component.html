@@ -37,7 +37,7 @@
   <div class="operation-container">
     <button
       type="button"
-      class="btn btn-success col-12 button mt-3"
+      class="btn btn-success col-12 button"
       *ngIf="!hasRecievedOperations"
       (click)="getOperations()">Get
       Operations</button>
@@ -51,7 +51,7 @@
   </div>
 
   <input
-    class="btn btn-success col-12 button mt-3 {{canSubmit ? '' : 'disabled'}}"
+    class="btn btn-success col-12 button mt-1 {{canSubmit ? '' : 'disabled'}}"
     type="submit"
     value="Submit">
 </form>

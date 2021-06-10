@@ -12,8 +12,8 @@ export class FormComponent implements OnInit {
   secondNumber: number = 0;
   result: number = null;
 
-  currentOperand: string = '';
   operands: string[] = [];
+  currentOperand: string = '';
 
   canSubmit: boolean = false;
   hasRecievedOperations: boolean = false;
@@ -25,12 +25,12 @@ export class FormComponent implements OnInit {
 
   getOperations(): void {
     this.apiService.getOperations().subscribe(
-      (operations) =>
-        operations.forEach((operand) => this.operands.push(operand)),
-      () => this.apiError()
+      (operations: string[]) => {
+        operations.forEach((operand) => this.operands.push(operand));
+        this.hasRecievedOperations = true;
+      },
+      (err: Error) => this.handleApiError(err)
     );
-
-    this.hasRecievedOperations = true;
   }
 
   handleSubmit(): void {
@@ -48,31 +48,31 @@ export class FormComponent implements OnInit {
         this.canSubmit = false;
         this.currentOperand = '';
       },
-      () => this.apiError()
+      (err: Error) => this.handleApiError(err)
     );
   }
 
   selectOperation(operand: string): void {
     this.currentOperand = operand;
-    if (!this.isDividingByZero()) return;
+    if (this.isDividingByZero()) return;
 
     this.errorText = '';
-    this.canSubmit = this.hasRecievedOperations;
+    this.canSubmit = true;
   }
 
   validateInput(input: number): boolean {
     if (this.numberOutOfRange(input)) return false;
-    if (!this.checkForInvalidCharacter()) return false;
-    if (!this.isDividingByZero()) return false;
+    if (this.hasInvalidNegative()) return false;
+    if (this.isDividingByZero()) return false;
 
     this.errorText = '';
-    this.canSubmit = this.hasRecievedOperations;
+    this.canSubmit = this.currentOperand !== '';
     return true;
   }
 
   numberOutOfRange(input: number): boolean {
     if (input > 9999999 || input < -9999999) {
-      const tooBig = input > 9999999;
+      const tooBig: boolean = input > 9999999;
       this.errorText = `that number is too ${tooBig ? 'big' : 'small'}!`;
       this.canSubmit = false;
       return true;
@@ -84,26 +84,27 @@ export class FormComponent implements OnInit {
     if (this.secondNumber === 0 && this.currentOperand === 'divide') {
       this.errorText = 'cannot divide by 0';
       this.canSubmit = false;
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
-  checkForInvalidCharacter(): boolean {
+  hasInvalidNegative(): boolean {
     const firstNumber: string = this.firstNumber?.toString();
     const secondNumber: string = this.secondNumber?.toString();
 
-    const valid =
+    const validNegativePlacement: boolean =
       firstNumber?.lastIndexOf('-') <= 0 && secondNumber?.lastIndexOf('-') <= 0;
-    if (!valid) {
+    if (!validNegativePlacement) {
       this.errorText = 'These are not the inputs you are looking for!';
       this.canSubmit = false;
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
-  apiError(): void {
+  handleApiError(err: Error): void {
     this.errorText = 'Oops! Something went wrong :(';
+    console.log(err);
   }
 }

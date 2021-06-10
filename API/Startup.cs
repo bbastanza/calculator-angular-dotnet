@@ -31,9 +31,7 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
             app.UseHttpsRedirection();
 
@@ -51,9 +49,7 @@ namespace API
             {
                 spa.Options.SourcePath = "client";
                 if (env.IsDevelopment())
-                {
                     spa.UseAngularCliServer("start");
-                }
             });
         }
     }
