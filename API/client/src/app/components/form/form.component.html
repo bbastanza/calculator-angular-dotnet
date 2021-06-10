@@ -9,36 +9,46 @@
     <input
       type="number"
       [(ngModel)]="firstNumber"
+      (ngModelChange)="validateInput($event)"
+      max="9999999"
+      min="-9999999"
       name="firstNumber"
       id="firstNumber"
       class="form-control input" />
   </div>
 
-  <div class="label mt-3">
+  <div class="label mt-2">
     <label
       class="form-label"
       for="secondNumber">Second Number</label>
     <input
       type="number"
       [(ngModel)]="secondNumber"
+      (ngModelChange)="validateInput($event)"
+      max="9999999"
+      min="-9999999"
       name="secondNumber"
       id="secondNumber"
       class="form-control input" />
   </div>
 
-  <button
-    type="button"
-    class="btn btn-success col-12 button mt-3"
-    *ngIf="canGetOperations"
-    (click)="getOperations()">Get
-    Operations</button>
+  <p *ngIf="errorText !== ''" class="error-text">{{errorText}}</p>
 
-  <app-button
-    [name]="operand"
-    [selected]="currentOperand === operand"
-    *ngFor="let operand of operands"
-    (onSelected)="selectOperation(operand)">hi
-  </app-button>
+  <div class="operation-container">
+    <button
+      type="button"
+      class="btn btn-success col-12 button mt-3"
+      *ngIf="!hasRecievedOperations"
+      (click)="getOperations()">Get
+      Operations</button>
+
+    <app-button
+      [name]="operand"
+      [selected]="currentOperand === operand"
+      *ngFor="let operand of operands"
+      (onSelected)="selectOperation(operand)">hi
+    </app-button>
+  </div>
 
   <input
     class="btn btn-success col-12 button mt-3 {{canSubmit ? '' : 'disabled'}}"

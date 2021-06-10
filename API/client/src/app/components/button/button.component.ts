@@ -8,7 +8,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export class ButtonComponent implements OnInit {
   @Input() name: string;
   @Input() selected: boolean = false;
-  @Output() onSelected: EventEmitter<any> = new EventEmitter();
+  @Output() onSelected: EventEmitter<void> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}

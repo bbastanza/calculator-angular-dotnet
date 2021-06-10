@@ -1,5 +1,7 @@
 .container {
-  max-width: 500px;
+  max-width: 600px;
+  min-width: 340px;
+  width: 90%;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;

@@ -1,0 +1,22 @@
+.label {
+  text-align: left;
+}
+
+.input {
+  text-align: center;
+}
+
+.result {
+  animation: pulse 8s infinite;
+}
+
+.operation-container {
+  height: 55px;
+}
+
+.error-text {
+  color: #f88070;
+  text-transform: capitalize;
+  margin-top: 18px;
+  margin-bottom: 0px;
+}
