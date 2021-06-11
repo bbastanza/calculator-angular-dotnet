@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl: string = 'https://localhost:5001/calculator';
+  private apiUrl: string = '/calculator';
   constructor(private httpClient: HttpClient) {}
 
   getOperations(): Observable<string[]> {
