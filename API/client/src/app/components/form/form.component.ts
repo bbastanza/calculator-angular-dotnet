@@ -65,8 +65,9 @@ export class FormComponent implements OnInit {
     this.currentOperand = operand;
     if (this.isDividingByZero()) return;
 
-    this.errorText = '';
-    this.canSubmit = true;
+    this.canSubmit =
+      this.validateInput(this.firstNumber) &&
+      this.validateInput(this.secondNumber);
   }
 
   validateInput(input: number): boolean {
