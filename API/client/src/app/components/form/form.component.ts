@@ -41,6 +41,8 @@ export class FormComponent implements OnInit {
   }
 
   handleSubmit(): void {
+    if (!this.validateInputs) return;
+
     const expression: Expression = {
       firstNumber: this.firstNumber,
       secondNumber: this.secondNumber,
@@ -65,13 +67,15 @@ export class FormComponent implements OnInit {
     this.currentOperand = operand;
     if (this.isDividingByZero()) return;
 
-    this.canSubmit =
-      this.validateInput(this.firstNumber) &&
-      this.validateInput(this.secondNumber);
+    this.canSubmit = this.validateInputs();
   }
 
-  validateInput(input: number): boolean {
-    if (this.numberOutOfRange(input)) return false;
+  validateInputs(): boolean {
+    if (
+      this.numberOutOfRange(this.firstNumber) ||
+      this.numberOutOfRange(this.secondNumber)
+    )
+      return false;
     if (this.hasInvalidNegative()) return false;
     if (this.isDividingByZero()) return false;
 

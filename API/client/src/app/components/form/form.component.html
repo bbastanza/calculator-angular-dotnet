@@ -9,7 +9,7 @@
     <input
       type="number"
       [(ngModel)]="firstNumber"
-      (ngModelChange)="validateInput($event)"
+      (ngModelChange)="validateInputs()"
       max="9999999"
       min="-9999999"
       name="firstNumber"
@@ -24,7 +24,7 @@
     <input
       type="number"
       [(ngModel)]="secondNumber"
-      (ngModelChange)="validateInput($event)"
+      (ngModelChange)="validateInputs()"
       max="9999999"
       min="-9999999"
       name="secondNumber"
